@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ubuntu:22.04
+FROM registry.gitlab.com/qio/standard/ubuntu:20.04
 
 RUN apt-get update && \
     yes | unminimize && \

@@ -15,4 +15,5 @@ class DockerHandler:
             command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
         )
         output, error = process.communicate(input=input_data)
+        print(error)
         return [line.strip() for line in output.split("\n") if line], error.strip()

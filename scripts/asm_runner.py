@@ -4,7 +4,7 @@ from scripts.docker_handler import DockerHandler
 class AssemblyRunner:
     SOLUTION_FOLDER = os.path.abspath("solution")
     TEST_CASES_FOLDER = os.path.abspath("test_cases")
-    DOCKER_EXEC = ["docker-compose", "exec", "asm-container"]
+    DOCKER_EXEC = ["docker-compose", "exec", "-T", "asm-container"]
 
     @staticmethod
     def compile_asm(asm_file):

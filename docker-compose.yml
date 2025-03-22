@@ -1,3 +1,4 @@
+version: "3.3"
 services:
   asm-container:
     build:
@@ -7,5 +8,3 @@ services:
     volumes:
       - ./solution:/workspace
       - ./test_cases:/test_cases
-    stdin_open: true
-    tty: true
