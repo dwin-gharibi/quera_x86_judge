@@ -9,6 +9,7 @@ TEST_OUTPUT_FOLDER = os.path.join(TEST_CASES_FOLDER, "out")
 SOLUTION_FOLDER = os.path.abspath("solution")
 
 CONFIG_FILE = "tester_config.json"
+VALID_FILE = "valid_files"
 TEST_FILE = "test.py"
 
 def discover_test_cases():
@@ -49,6 +50,14 @@ def generate_config(test_cases, solution_file):
 
     with open(CONFIG_FILE, "w") as f:
         json.dump(config, f, indent=4)
+
+    print(f"✅ Configuration file '{CONFIG_FILE}' generated successfully.")
+
+def generate_valid_files(solution_file):
+    """Generate a valid file configuration based on solution file"""
+
+    with open(VALID_FILE, "w") as f:
+        f.write(f"solution/{solution_file}")
 
     print(f"✅ Configuration file '{CONFIG_FILE}' generated successfully.")
 
@@ -109,6 +118,7 @@ if __name__ == "__main__":
     
     if test_cases:
         generate_config(test_cases, solution_file)
+        generate_valid_files(solution_file)
         generate_test_file(test_cases, solution_file)
         print("🚀 Test suite and configuration successfully generated!")
     else:
