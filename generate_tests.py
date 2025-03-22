@@ -9,7 +9,7 @@ TEST_OUTPUT_FOLDER = os.path.join(TEST_CASES_FOLDER, "out")
 SOLUTION_FOLDER = os.path.abspath("solution")
 
 CONFIG_FILE = "tester_config.json"
-TEST_FILE = "tests/test_assembly.py"
+TEST_FILE = "testers/test_assembly.py"
 
 def discover_test_cases():
     """Discover all test cases by matching input and output files."""
