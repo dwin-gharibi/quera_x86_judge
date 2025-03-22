@@ -1,5 +1,7 @@
 import os
 import json
+import sys
+import argparse
 
 TEST_CASES_FOLDER = os.path.abspath("test_cases")
 TEST_INPUT_FOLDER = os.path.join(TEST_CASES_FOLDER, "in")
@@ -26,15 +28,15 @@ def discover_test_cases():
     
     return test_cases
 
-def generate_config(test_cases):
+def generate_config(test_cases, solution_file):
     """Generate a JSON configuration file based on discovered test cases."""
     config = {
         "version": 2,
         "python_version": 3.9,
-        "solution_signature": "solution/Dockerfile",
+        "solution_signature": f"solution/{solution_file}",
         "number_of_tests": len(test_cases),
         "can_submit_single_file": True,
-        "single_file_path": "solution/Dockerfile",
+        "single_file_path": f"solution/{solution_file}",
         "packages": [
             {
                 "name": "8086_judge",
@@ -50,7 +52,7 @@ def generate_config(test_cases):
 
     print(f"✅ Configuration file '{CONFIG_FILE}' generated successfully.")
 
-def generate_test_file(test_cases):
+def generate_test_file(test_cases, solution_file):
     """Generate a Python unittest file with all discovered test cases."""
     test_content = '''import unittest
 import os
@@ -70,7 +72,7 @@ class TestAssemblyPrograms(unittest.TestCase):
     for index, (input_file, output_file) in enumerate(test_cases):
         test_content += f'''
     def test_{index + 1}(self):
-        asm_file = "Q2.asm"
+        asm_file = "{solution_file}"
         input_file = "{input_file}"
         output_file = "{output_file}"
 
@@ -96,11 +98,18 @@ if __name__ == "__main__":
     print(f"✅ Test file '{TEST_FILE}' generated successfully.")
 
 if __name__ == "__main__":
+    
+    parser = argparse.ArgumentParser(description="Process assembly solution file.")
+    parser.add_argument("--solution", type=str, required=True, help="Path to the assembly solution file")
+
+    args = parser.parse_args()
+    solution_file = args.solution
+    
     test_cases = discover_test_cases()
     
     if test_cases:
-        generate_config(test_cases)
-        generate_test_file(test_cases)
+        generate_config(test_cases, solution_file)
+        generate_test_file(test_cases, solution_file)
         print("🚀 Test suite and configuration successfully generated!")
     else:
         print("⚠️ No valid test cases found. Please check your test_cases/in and test_cases/out directories.")
